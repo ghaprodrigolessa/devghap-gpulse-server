@@ -116,9 +116,9 @@ app.post("/insert_precaucao", (req, res) => {
 // atualizar precaucao.
 app.post("/update_precaucao/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento, idprecaucao, nome, data, idprofissional} = req.body;
-  var sql = "UPDATE atendimento_precaucao SET idpct = $1, idatendimento = $2, idprecaucao = $3, nome = $4, data = $5, idprofissional = $6 WHERE id = $7";
-  pool.query(sql, [idpct, idatendimento, idprecaucao, nome, data, idprofissional, id], (error, results) => {
+  const {idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino} = req.body;
+  var sql = "UPDATE atendimento_precaucao SET idpct = $1, idatendimento = $2, idprecaucao = $3, nome = $4, datainicio = $5, idprofissional = $6, datatermino = $7 WHERE id = $8";
+  pool.query(sql, [idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
