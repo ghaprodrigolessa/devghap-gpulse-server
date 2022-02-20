@@ -48,7 +48,6 @@ app.get("/list_todos_atendimentos", (req, res) => {
   pool.query(sql, (error, results) => {
     if (error) throw error;
     res.send(results);
-    console.log(results.rows.idpct);
   });
 });
 
@@ -58,7 +57,6 @@ app.post("/insert_atendimento", (req, res) => {
   var sql ="INSERT INTO atendimento (idpct, idatendimento) VALUES ($1, $2)";
   pool.query(sql, [idpct, idatendimento], (error, results) => {
     if (error) throw new Error( req.body.idpct + 'MERDA: ' + error);
-    console.log(req.body);
     res.send(results);
   });
 });
@@ -70,7 +68,6 @@ app.post("/update_atendimento/:id", (req, res) => {
   var sql = "UPDATE atendimento SET idpct = $1, idatendimento = $2 WHERE id = $3";
   pool.query(sql, [idpct, idatendimento, id], (error, results) => {
     if (error) throw new Error(error);
-    console.log(id);
     res.send(results);
   });
 });
@@ -82,7 +79,6 @@ app.get("/delete_atendimento/:id", (req, res) => {
   var sql = "DELETE FROM atendimento WHERE id = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
-    console.log(id);
     res.send(results);
   });
 });
@@ -100,7 +96,7 @@ app.get("/list_opcoes_precaucoes", (req, res) => {
 // listar todas as precauções.
 app.get("/list_precaucoes/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  var sql = "SELECT * FROM atendimento_precaucao WHERE id = $1";
+  var sql = "SELECT * FROM atendimento_precaucao WHERE idatendimento = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
@@ -109,9 +105,9 @@ app.get("/list_precaucoes/:id", (req, res) => {
 
 // inserir precaucao.
 app.post("/insert_precaucao", (req, res) => {
-  const {idpct, idatendimento, idprecaucao, nome, data, idprofissional} = req.body;
-  var sql ="INSERT INTO atendimento_precaucao (idpct, idatendimento, idprecaucao, nome, data, idprofissional) VALUES ($1, $2, $3, $4, $5, $6)";
-  pool.query(sql, [idpct, idatendimento, idprecaucao, nome, data, idprofissional], (error, results) => {
+  const {idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino} = req.body;
+  var sql ="INSERT INTO atendimento_precaucao (idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  pool.query(sql, [idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
@@ -135,7 +131,6 @@ app.get("/delete_precaucao/:id", (req, res) => {
   var sql = "DELETE FROM atendimento_precaucao WHERE id = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
-    console.log(id);
     res.send(results);
   });
 });
