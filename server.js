@@ -98,9 +98,10 @@ app.get("/list_opcoes_precaucoes", (req, res) => {
 });
 
 // listar todas as precauções.
-app.get("/list_todos_precaucoes", (req, res) => {
-  var sql = "SELECT * FROM atendimento_precaucao";
-  pool.query(sql, (error, results) => {
+app.get("/list_precaucoes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_precaucao WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
   });
