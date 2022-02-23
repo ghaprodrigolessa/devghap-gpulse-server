@@ -166,3 +166,35 @@ app.post("/update_alergia/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// DIAGNÓSTICOS.
+// listar todos os diagnósticos.
+app.get("/list_diagnosticos/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_diagnostico WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir alergia.
+app.post("/insert_diagnostico", (req, res) => {
+  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
+  var sql ="INSERT INTO atendimento_diagnostico (idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+  pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar alergia.
+app.post("/update_diagnostico/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
+  var sql = "UPDATE atendimento_diagnostico SET idpct = $1, idatendimento = $2, nome = $3, datainicio = $4, datatermino = $5, idprofissional = $6, cid = $7, descricao = $8, WHERE id = $9";
+  pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
