@@ -134,3 +134,35 @@ app.get("/delete_precaucao/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// ALERGIAS.
+// listar todas as alergias.
+app.get("/list_alergias/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_alergia WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir alergia.
+app.post("/insert_alergia", (req, res) => {
+  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional} = req.body;
+  var sql ="INSERT INTO atendimento_alergia (idpct, idatendimento, nome, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6)";
+  pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar alergia.
+app.post("/update_alergia/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional} = req.body;
+  var sql = "UPDATE atendimento_alergia SET idpct = $1, idatendimento = $2, nome = $3, datainicio = $4, datatermino = $5, idprofissional = $6, WHERE id = $7";
+  pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
