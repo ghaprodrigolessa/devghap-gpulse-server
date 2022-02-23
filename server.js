@@ -171,7 +171,7 @@ app.post("/update_alergia/:id", (req, res) => {
 // listar CID10.
 app.get("/list_cid", (req, res) => {
   const id = parseInt(req.params.id);
-  var sql = "SELECT * FROM list_cid";
+  var sql = "SELECT * FROM cid10";
   pool.query(sql, (error, results) => {
     if (error) throw error;
     res.send(results);
