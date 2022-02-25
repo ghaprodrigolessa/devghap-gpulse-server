@@ -188,12 +188,11 @@ app.get("/list_diagnosticos/:id", (req, res) => {
   });
 });
 
-
 // inserir diagnóstico.
 app.post("/insert_diagnostico", (req, res) => {
-  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
-  var sql ="INSERT INTO atendimento_diagnostico (idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-  pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao], (error, results) => {
+  const {idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
+  var sql ="INSERT INTO atendimento_diagnostico (idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
@@ -202,9 +201,9 @@ app.post("/insert_diagnostico", (req, res) => {
 // atualizar diagnóstico.
 app.post("/update_diagnostico/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
-  var sql = "UPDATE atendimento_diagnostico SET idpct = $1, idatendimento = $2, nome = $3, datainicio = $4, datatermino = $5, idprofissional = $6, cid = $7, descricao = $8, WHERE id = $9";
-  pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao, id], (error, results) => {
+  const {idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
+  var sql = "UPDATE atendimento_diagnostico SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, idprofissional = $5, cid = $6, descricao = $7, WHERE id = $8";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
