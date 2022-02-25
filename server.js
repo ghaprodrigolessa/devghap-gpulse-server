@@ -188,7 +188,8 @@ app.get("/list_diagnosticos/:id", (req, res) => {
   });
 });
 
-// inserir alergia.
+
+// inserir diagnóstico.
 app.post("/insert_diagnostico", (req, res) => {
   const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
   var sql ="INSERT INTO atendimento_diagnostico (idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
@@ -198,7 +199,7 @@ app.post("/insert_diagnostico", (req, res) => {
   });
 });
 
-// atualizar alergia.
+// atualizar diagnóstico.
 app.post("/update_diagnostico/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
