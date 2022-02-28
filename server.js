@@ -238,7 +238,7 @@ app.post("/insert_proposta", (req, res) => {
 app.post("/update_proposta/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const {idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status} = req.body;
-  var sql = "UPDATE atendimento_diagnostico SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, proposta = $5, idprofissional = $6, status = $7 WHERE id = $8";
+  var sql = "UPDATE atendimento_proposta SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, proposta = $5, idprofissional = $6, status = $7 WHERE id = $8";
   pool.query(sql, [idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
