@@ -8,10 +8,10 @@ app.use(cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Request-Private-Network", "true");
-  res.header("Access-Control-Allow-Private-Network", "true"); 
+  res.header("Access-Control-Allow-Private-Network", "true");
   res.header(
     "Access-Control-Request-Private-Network",
-    "Access-Control-Allow-Private-Network",  
+    "Access-Control-Allow-Private-Network",
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
@@ -57,10 +57,10 @@ app.get("/list_todos_atendimentos", (req, res) => {
 
 // inserir atendimento.
 app.post("/insert_atendimento", (req, res) => {
-  const {idpct, idatendimento} = req.body;
-  var sql ="INSERT INTO atendimento (idpct, idatendimento) VALUES ($1, $2)";
+  const { idpct, idatendimento } = req.body;
+  var sql = "INSERT INTO atendimento (idpct, idatendimento) VALUES ($1, $2)";
   pool.query(sql, [idpct, idatendimento], (error, results) => {
-    if (error) throw new Error( req.body.idpct + 'MERDA: ' + error);
+    if (error) throw new Error(req.body.idpct + 'MERDA: ' + error);
     res.send(results);
   });
 });
@@ -68,7 +68,7 @@ app.post("/insert_atendimento", (req, res) => {
 // atualizar atendimento.
 app.post("/update_atendimento/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento} = req.body;
+  const { idpct, idatendimento } = req.body;
   var sql = "UPDATE atendimento SET idpct = $1, idatendimento = $2 WHERE id = $3";
   pool.query(sql, [idpct, idatendimento, id], (error, results) => {
     if (error) throw new Error(error);
@@ -109,8 +109,8 @@ app.get("/list_precaucoes/:id", (req, res) => {
 
 // inserir precaucao.
 app.post("/insert_precaucao", (req, res) => {
-  const {idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino} = req.body;
-  var sql ="INSERT INTO atendimento_precaucao (idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  const { idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino } = req.body;
+  var sql = "INSERT INTO atendimento_precaucao (idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   pool.query(sql, [idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
@@ -120,7 +120,7 @@ app.post("/insert_precaucao", (req, res) => {
 // atualizar precaucao.
 app.post("/update_precaucao/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino} = req.body;
+  const { idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino } = req.body;
   var sql = "UPDATE atendimento_precaucao SET idpct = $1, idatendimento = $2, idprecaucao = $3, nome = $4, datainicio = $5, idprofissional = $6, datatermino = $7 WHERE id = $8";
   pool.query(sql, [idpct, idatendimento, idprecaucao, nome, datainicio, idprofissional, datatermino, id], (error, results) => {
     if (error) throw new Error(error);
@@ -152,8 +152,8 @@ app.get("/list_alergias/:id", (req, res) => {
 
 // inserir alergia.
 app.post("/insert_alergia", (req, res) => {
-  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional} = req.body;
-  var sql ="INSERT INTO atendimento_alergia (idpct, idatendimento, nome, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6)";
+  const { idpct, idatendimento, nome, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_alergia (idpct, idatendimento, nome, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6)";
   pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
@@ -163,7 +163,7 @@ app.post("/insert_alergia", (req, res) => {
 // atualizar alergia.
 app.post("/update_alergia/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento, nome, datainicio, datatermino, idprofissional} = req.body;
+  const { idpct, idatendimento, nome, datainicio, datatermino, idprofissional } = req.body;
   var sql = "UPDATE atendimento_alergia SET idpct = $1, idatendimento = $2, nome = $3, datainicio = $4, datatermino = $5, idprofissional = $6 WHERE id = $7";
   pool.query(sql, [idpct, idatendimento, nome, datainicio, datatermino, idprofissional, id], (error, results) => {
     if (error) throw new Error(error);
@@ -194,8 +194,8 @@ app.get("/list_diagnosticos/:id", (req, res) => {
 
 // inserir diagnóstico.
 app.post("/insert_diagnostico", (req, res) => {
-  const {idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
-  var sql ="INSERT INTO atendimento_diagnostico (idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao } = req.body;
+  var sql = "INSERT INTO atendimento_diagnostico (idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
@@ -205,7 +205,7 @@ app.post("/insert_diagnostico", (req, res) => {
 // atualizar diagnóstico.
 app.post("/update_diagnostico/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao} = req.body;
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao } = req.body;
   var sql = "UPDATE atendimento_diagnostico SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, idprofissional = $5, cid = $6, descricao = $7 WHERE id = $8";
   pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, cid, descricao, id], (error, results) => {
     if (error) throw new Error(error);
@@ -226,8 +226,8 @@ app.get("/list_propostas/:id", (req, res) => {
 
 // inserir proposta.
 app.post("/insert_proposta", (req, res) => {
-  const {idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status} = req.body;
-  var sql ="INSERT INTO atendimento_proposta (idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  const { idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status } = req.body;
+  var sql = "INSERT INTO atendimento_proposta (idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status) VALUES ($1, $2, $3, $4, $5, $6, $7)";
   pool.query(sql, [idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
@@ -237,9 +237,73 @@ app.post("/insert_proposta", (req, res) => {
 // atualizar proposta.
 app.post("/update_proposta/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const {idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status} = req.body;
+  const { idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status } = req.body;
   var sql = "UPDATE atendimento_proposta SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, proposta = $5, idprofissional = $6, status = $7 WHERE id = $8";
   pool.query(sql, [idpct, idatendimento, datainicio, datatermino, proposta, idprofissional, status, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// VIA DE DIETA E ELEVAÇÃO DA CABECEIRA.
+// retornar último registro de dieta e elevação da cabeceira.
+app.get("/list_dieta/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_dieta ORDER BY datainicio DESC LIMIT 1 WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir dieta.
+app.post("/insert_dieta", (req, res) => {
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, via, cabeceira, infusao, get } = req.body;
+  var sql = "INSERT INTO atendimento_dieta (idpct, idatendimento, datainicio, datatermino, idprofissional, via, cabeceira, infusao, get) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, via, cabeceira, infusao, get], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar dieta.
+app.post("/update_dieta/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, via, cabeceira, infusao, get } = req.body;
+  var sql = "UPDATE atendimento_dieta SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, idprofissional = $5, via = $6, cabeceira = $7, infusao = $8, get = $9 WHERE id = $10";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, via, cabeceira, infusao, get, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// INVASÕES.
+// retornar registros de invasão ativos para o atendimento selecionado.
+app.get("/list_invasoes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_invasao WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir invasão.
+app.post("/insert_invasao", (req, res) => {
+  const { idpct, idatendimento, dispositivo, local, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_invasao (idpct, idatendimento, dispositivo, local, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  pool.query(sql, [idpct, idatendimento, dispositivo, local, datainicio, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar invasão.
+app.post("/update_invasao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, dispositivo, local, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "UPDATE atendimento_invasao SET idpct = $1, idatendimento = $2, dispositivo = $3, local = $4, datainicio = $5, datatermino = $6, idprofissional = $7 WHERE id = $8";
+  pool.query(sql, [idpct, idatendimento, dispositivo, local, datainicio, datatermino, idprofissional, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
