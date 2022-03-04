@@ -308,3 +308,35 @@ app.post("/update_invasao/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// LESÕES.
+// retornar registros de lesões ativas para o atendimento selecionado.
+app.get("/list_lesoes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_lesao WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir lesão.
+app.post("/insert_lesao", (req, res) => {
+  const { idpct, idatendimento, lesao, grau, descricao, tratamento, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_lesao (idpct, idatendimento, lesao, grau, descricao, tratamento, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+  pool.query(sql, [idpct, idatendimento, lesao, grau, descricao, tratamento, datainicio, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar lesão.
+app.post("/update_lesao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, lesao, grau, descricao, tratamento, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "UPDATE atendimento_lesao SET idpct = $1, idatendimento = $2, lesao = $3, grau = $4, descricao = $5, tratamento = $6, datainicio = $7, datatermino = $8, idprofissional = $9 WHERE id = $10";
+  pool.query(sql, [idpct, idatendimento, lesao, grau, descricao, tratamento, datainicio, datatermino, idprofissional, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
