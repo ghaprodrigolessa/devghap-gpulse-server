@@ -355,7 +355,7 @@ app.get("/list_interconsultas/:id", (req, res) => {
 // inserir interconsulta.
 app.post("/insert_interconsulta", (req, res) => {
   const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status } = req.body;
-  var sql = "INSERT INTO atendimento_interconsulta (idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, #10)";
+  var sql = "INSERT INTO atendimento_interconsulta (idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
   pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
