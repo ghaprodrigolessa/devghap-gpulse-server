@@ -344,9 +344,8 @@ app.post("/update_lesao/:id", (req, res) => {
 // INTERCONSULTAS.
 // retornar todos os registros de interconsultas (utilizado para exibir total distribuído entre as unidades de atendimento).
 app.get("/list_interconsultasall", (req, res) => {
-  const id = parseInt(req.params.id);
   var sql = "SELECT * FROM atendimento_interconsulta";
-  pool.query(sql, [id], (error, results) => {
+  pool.query(sql, (error, results) => {
     if (error) throw error;
     res.send(results);
   });
