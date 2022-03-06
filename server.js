@@ -340,3 +340,46 @@ app.post("/update_lesao/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// INTERCONSULTAS.
+// retornar registros de interconsultas para o atendimento selecionado.
+app.get("/list_interconsultas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_interconsulta WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir interconsulta.
+app.post("/insert_interconsulta", (req, res) => {
+  const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status } = req.body;
+  var sql = "INSERT INTO atendimento_interconsulta (idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, #10)";
+  pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar interconsulta.
+app.post("/update_interconsulta/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status } = req.body;
+  var sql = "UPDATE atendimento_interconsulta SET idpct = $1, idatendimento = $2, especialidade = $3, motivo = $4, parecer = $5, datainicio = $6, datatermino = $7, idsolicitante = $8, idatendente = $9, status = $10 WHERE id = $11";
+  pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar interconsulta.
+app.get("/delete_interconsulta/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_interconsulta WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
