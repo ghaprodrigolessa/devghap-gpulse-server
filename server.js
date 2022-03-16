@@ -395,7 +395,7 @@ app.get("/delete_interconsulta/:id", (req, res) => {
 
 // ESCALAS
 // listar opções de escalas.
-app.get("/list_opcoes_escalas/:id", (req, res) => {
+app.get("/list_opcoes_escalas", (req, res) => {
   const id = parseInt(req.params.id);
   var sql = "SELECT * FROM escala";
   pool.query(sql, [id], (error, results) => {
