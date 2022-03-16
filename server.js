@@ -392,3 +392,56 @@ app.get("/delete_interconsulta/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// ESCALAS
+// listar opções de escalas.
+app.get("/list_opcoes_escalas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM escala";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar registros de escalas para o atendimento selecionado.
+app.get("/list_escalas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_escala WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir escala.
+app.post("/insert_escala", (req, res) => {
+  const { idpct, idatendimento, data, cd_escala, ds_escala, valor_resultado, ds_resultado, idprofissional, status } = req.body;
+  var sql = "INSERT INTO atendimento_escala (idpct, idatendimento, data, cd_escala, ds_escala, valor_resultado, ds_resultado, idprofissional, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+  pool.query(sql, [idpct, idatendimento, data, cd_escala, ds_escala, valor_resultado, ds_resultado, idprofissional, status], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar escala.
+app.post("/update_escala/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, data, cd_escala, ds_escala, valor_resultado, ds_resultado, idprofissional, status } = req.body;
+  var sql = "UPDATE atendimento_escala SET idpct = $1, idatendimento = $2, data = $3, cd_escala = $4, ds_escala = $5, valor_resultado = $6, ds_resultado = $7, idprofissional = $8, status = $9 WHERE id = $10";
+  pool.query(sql, [idpct, idatendimento, data, cd_escala, ds_escala, valor_resultado, ds_resultado, idprofissional, status, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar escala.
+app.get("/delete_escala/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_escala WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
