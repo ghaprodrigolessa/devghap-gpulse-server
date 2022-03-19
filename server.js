@@ -363,9 +363,9 @@ app.get("/list_interconsultas/:id", (req, res) => {
 
 // inserir interconsulta.
 app.post("/insert_interconsulta", (req, res) => {
-  const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status } = req.body;
-  var sql = "INSERT INTO atendimento_interconsulta (idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
-  pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status], (error, results) => {
+  const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, unidade } = req.body;
+  var sql = "INSERT INTO atendimento_interconsulta (idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, unidade) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
+  pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, unidade], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
@@ -374,9 +374,9 @@ app.post("/insert_interconsulta", (req, res) => {
 // atualizar interconsulta.
 app.post("/update_interconsulta/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status } = req.body;
-  var sql = "UPDATE atendimento_interconsulta SET idpct = $1, idatendimento = $2, especialidade = $3, motivo = $4, parecer = $5, datainicio = $6, datatermino = $7, idsolicitante = $8, idatendente = $9, status = $10 WHERE id = $11";
-  pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, id], (error, results) => {
+  const { idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, unidade } = req.body;
+  var sql = "UPDATE atendimento_interconsulta SET idpct = $1, idatendimento = $2, especialidade = $3, motivo = $4, parecer = $5, datainicio = $6, datatermino = $7, idsolicitante = $8, idatendente = $9, status = $10, unidade = $11 WHERE id = $12";
+  pool.query(sql, [idpct, idatendimento, especialidade, motivo, parecer, datainicio, datatermino, idsolicitante, idatendente, status, unidade, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
