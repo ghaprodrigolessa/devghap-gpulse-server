@@ -444,3 +444,202 @@ app.get("/delete_escala/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// PLANO TERAPÊUTICO.
+// retornar registros de planos terapêuticos para o atendimento selecionado.
+app.get("/list_planosterapeuticos/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_planoterapeutico WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir plano terapêutico.
+app.post("/insert_planoterapeutico", (req, res) => {
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados } = req.body;
+  var sql = "INSERT INTO atendimento_planoterapeutico (idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar plano terapêutico.
+app.post("/update_planoterapeutico/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados } = req.body;
+  var sql = "UPDATE atendimento_planoterapeutico SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, idprofissional = $5, moraes = $6, decliniofuncional = $7, riscofuncional = $8, linhadecuidados = $9 WHERE id = $10";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar plano terapêutico.
+app.get("/delete_planoterapeutico/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_planoterapeutico WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// OBJETIVOS.
+// listar opções de objetivos primários e secundários.
+app.get("/list_opcoes_objetivos", (req, res) => {
+  var sql = "SELECT * FROM planoterapeutico_objetivos";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar registros de objetivos para o atendimento selecionado.
+app.get("/list_objetivos/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_planoterapeutico_objetivos WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir objetivo.
+app.post("/insert_objetivo", (req, res) => {
+  const { idpct, idatendimento, idplanoterapeutico, idobjetivo, objetivo, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_planoterapeutico_objetivos (idpct, idatendimento, idplanoterapeutico, idobjetivo, objetivo, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+  pool.query(sql, [idpct, idatendimento, idplanoterapeutico, idobjetivo, objetivo, datainicio, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar objetivo.
+app.post("/update_objetivo/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, idplanoterapeutico, idobjetivo, objetivo, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "UPDATE atendimento_planoterapeutico_objetivos SET idpct = $1, idatendimento = $2, idplanoterapeutico = $3, idobjetivo = $4, objetivo = $5, datainicio = $6, datatermino = $7, idprofissional = $8 WHERE id = $9";
+  pool.query(sql, [idpct, idatendimento, idplanoterapeutico, idobjetivo, objetivo, datainicio, datatermino, idprofissional, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar objetivo.
+app.get("/delete_objetivo/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_planoterapeutico_objetivos WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// METAS.
+// listar opções de metas.
+app.get("/list_opcoes_metas", (req, res) => {
+  var sql = "SELECT * FROM planoterapeutico_metas";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar registros de metas para o atendimento selecionado.
+app.get("/list_metas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_planoterapeutico_metas WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir meta.
+app.post("/insert_meta", (req, res) => {
+  const { idpct, idatendimento, idplanoterapeutico, idobjetivo, meta, datainicio, dataestimada, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_planoterapeutico_metas (idpct, idatendimento, idplanoterapeutico, idobjetivo, meta, datainicio, dataestimada, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+  pool.query(sql, [idpct, idatendimento, idplanoterapeutico, idobjetivo, meta, datainicio, dataestimada, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar meta.
+app.post("/update_meta/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, idplanoterapeutico, idobjetivo, meta, datainicio, dataestimada, datatermino, idprofissional } = req.body;
+  var sql = "UPDATE atendimento_planoterapeutico_metas SET idpct = $1, idatendimento = $2, idplanoterapeutico = $3, idobjetivo = $4, meta = $5, datainicio = $6, dataestimada = $7, datatermino = $8, idprofissional = $9 WHERE id = $10";
+  pool.query(sql, [idpct, idatendimento, idplanoterapeutico, idobjetivo, meta, datainicio, dataestimada, datatermino, idprofissional, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar meta.
+app.get("/delete_meta/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_planoterapeutico_metas WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// PROPOSTAS TERAPÊUTICAS.
+// listar opções de propostas terapêuticas.
+app.get("/list_opcoes_propostasterapeuticas", (req, res) => {
+  var sql = "SELECT * FROM planoterapeutico_propostasterapeuticas";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar registros de propostas terapêuticas para o atendimento selecionado.
+app.get("/list_propostasterapeuticas/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_planoterapeutico_propostasterapeuticas WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir proposta terapêutica.
+app.post("/insert_propostaterapeutica", (req, res) => {
+  const { idpct, idatendimento, idplanoterapeutico, idobjetivo, idmeta, propostaterapeutica, datainicio, dataestimada, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_planoterapeutico_propostasterapeuticas (idpct, idatendimento, idplanoterapeutico, idobjetivo, idmeta, propostaterapeutica, datainicio, dataestimada, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+  pool.query(sql, [idpct, idatendimento, idplanoterapeutico, idobjetivo, idmeta, propostaterapeutica, datainicio, dataestimada, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar proposta terapêutica.
+app.post("/update_propostaterapeutica/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, idplanoterapeutico, idobjetivo, idmeta, propostaterapeutica, datainicio, dataestimada, datatermino, idprofissional } = req.body;
+  var sql = "UPDATE atendimento_planoterapeutico_propostasterapeuticas SET idpct = $1, idatendimento = $2, idplanoterapeutico = $3, idobjetivo = $4, idmeta = $5, propostaterapeutica = $6, datainicio = $7, dataestimada = $8, datatermino = $9, idprofissional = $10 WHERE id = $11";
+  pool.query(sql, [idpct, idatendimento, idplanoterapeutico, idobjetivo, idmeta, propostaterapeutica, datainicio, dataestimada, datatermino, idprofissional, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar proposta terapêutica.
+app.get("/delete_propostaterapeutica/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_planoterapeutico_propostasterapeuticas WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
