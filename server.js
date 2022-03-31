@@ -458,9 +458,9 @@ app.get("/list_planosterapeuticos/:id", (req, res) => {
 
 // inserir plano terapêutico.
 app.post("/insert_planoterapeutico", (req, res) => {
-  const { idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados } = req.body;
-  var sql = "INSERT INTO atendimento_planoterapeutico (idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados], (error, results) => {
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, status } = req.body;
+  var sql = "INSERT INTO atendimento_planoterapeutico (idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, status], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
@@ -469,9 +469,9 @@ app.post("/insert_planoterapeutico", (req, res) => {
 // atualizar plano terapêutico.
 app.post("/update_planoterapeutico/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados } = req.body;
-  var sql = "UPDATE atendimento_planoterapeutico SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, idprofissional = $5, moraes = $6, decliniofuncional = $7, riscofuncional = $8, linhadecuidados = $9 WHERE id = $10";
-  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, id], (error, results) => {
+  const { idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, status } = req.body;
+  var sql = "UPDATE atendimento_planoterapeutico SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, idprofissional = $5, moraes = $6, decliniofuncional = $7, riscofuncional = $8, linhadecuidados = $9, status = $10 WHERE id = $11";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, idprofissional, moraes, decliniofuncional, riscofuncional, linhadecuidados, status, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
