@@ -643,3 +643,161 @@ app.get("/delete_propostaterapeutica/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// PRESCRIÇÃO.
+// 1. registros de prescrição.
+// listar registros de prescrição para um atendimento.
+app.get("/atendimento_prescricao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_prescricao WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir registro de prescrição.
+app.post("/insert_prescricao", (req, res) => {
+  const { idpct, idatendimento, data, status } = req.body;
+  var sql = "INSERT INTO atendimento_prescricao (idpct, idatendimento, data, status) VALUES ($1, $2, $3, $4)";
+  pool.query(sql, [idpct, idatendimento, data, status], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar registros de prescrição.
+app.post("/update_prescricao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, data, status } = req.body;
+  var sql = "UPDATE atendimento_prescricao SET idpct = $1, idatendimento = $2, data = $3, status = $4 WHERE id = $5";
+  pool.query(sql, [idpct, idatendimento, data, status, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar registro de prescrição.
+app.get("/delete_prescricao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_prescricao WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// 2. itens de prescrição (medicamentos e insumos).
+// listar opções de itens de prescrição.
+app.get("/list_opcoes_itens_prescricao", (req, res) => {
+  var sql = "SELECT * FROM prescricao_opcoes_itens";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar itens de prescrição para um atendimento selecionado (importante para os antibióticos).
+app.get("/atendimento_todos_itens/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_prescricao_item WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar itens de prescrição para uma prescrição selecionada.
+app.get("/atendimento_prescricao_item/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_prescricao_item WHERE idprescricao = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir registro de prescrição.
+app.post("/insert_atendimento_prescricao_item", (req, res) => {
+  const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem } = req.body;
+  var sql = "INSERT INTO atendimento_prescricao_item (idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar item de prescrição.
+app.post("/update_atendimento_prescricao_item/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem } = req.body;
+  var sql = "UPDATE atendimento_prescricao_item SET idpct = $1, idatendimento = $2, idprescricao = $3, iditem = $4, nome_item = $5, keyword_item = $6, qtde = $7, via = $8, horario = $9, observacao = $10, status = $11, justificativa = $12, datainicio = $13, datatermino = $14, tipoitem = $15 WHERE id = $16";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar item de prescrição.
+app.get("/delete_atendimento_prescricao_item/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_prescricao_item WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// 3. componentes de prescrição (acompanham medicamentos e insumos).
+// listar opções de componentes de prescrição.
+app.get("/list_opcoes_componentes_prescricao", (req, res) => {
+  var sql = "SELECT * FROM prescricao_opcoes_componentes";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar componentes de prescrição para uma prescrição selecionada.
+app.get("/atendimento_prescricao_componente/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_prescricao_componentes WHERE idprescricao = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir registro de prescrição.
+app.post("/insert_atendimento_prescricao_componente", (req, res) => {
+  const { idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde } = req.body;
+  var sql = "INSERT INTO atendimento_prescricao_componente (idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde) VALUES ($1, $2, $3, $4, $5, $6)";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar item de prescrição.
+app.post("/update_atendimento_prescricao_componente/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde } = req.body;
+  var sql = "UPDATE atendimento_prescricao_componente SET idpct = $1, idatendimento = $2, idprescricao = $3, iditemprescricao = $4, componente = $5, qtde = $6 WHERE id = $7";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar item de prescrição.
+app.get("/delete_atendimento_prescricao_componente/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_prescricao_componente WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
