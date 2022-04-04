@@ -718,7 +718,7 @@ app.get("/atendimento_prescricao_item/:id", (req, res) => {
   });
 });
 
-// inserir registro de prescrição.
+// inserir item de prescrição.
 app.post("/insert_atendimento_prescricao_item", (req, res) => {
   const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem } = req.body;
   var sql = "INSERT INTO atendimento_prescricao_item (idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)";
@@ -763,7 +763,7 @@ app.get("/list_opcoes_componentes_prescricao", (req, res) => {
 // retornar componentes de prescrição para uma prescrição selecionada.
 app.get("/atendimento_prescricao_componente/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  var sql = "SELECT * FROM atendimento_prescricao_componentes WHERE idprescricao = $1";
+  var sql = "SELECT * FROM atendimento_prescricao_componente WHERE idprescricao = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
