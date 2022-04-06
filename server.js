@@ -720,9 +720,9 @@ app.get("/atendimento_prescricao_item/:id", (req, res) => {
 
 // inserir item de prescrição.
 app.post("/insert_atendimento_prescricao_item", (req, res) => {
-  const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento } = req.body;
-  var sql = "INSERT INTO atendimento_prescricao_item (idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)";
-  pool.query(sql, [idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento], (error, results) => {
+  const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento, tag_componente } = req.body;
+  var sql = "INSERT INTO atendimento_prescricao_item (idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento, tag_componente) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento, tag_componente], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
@@ -731,9 +731,9 @@ app.post("/insert_atendimento_prescricao_item", (req, res) => {
 // atualizar item de prescrição.
 app.post("/update_atendimento_prescricao_item/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento } = req.body;
-  var sql = "UPDATE atendimento_prescricao_item SET idpct = $1, idatendimento = $2, idprescricao = $3, iditem = $4, nome_item = $5, keyword_item = $6, qtde = $7, via = $8, horario = $9, observacao = $10, status = $11, justificativa = $12, datainicio = $13, datatermino = $14, tipoitem = $15, aprazamento = $16 WHERE id = $17";
-  pool.query(sql, [idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento, id], (error, results) => {
+  const { idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento, tag_componente } = req.body;
+  var sql = "UPDATE atendimento_prescricao_item SET idpct = $1, idatendimento = $2, idprescricao = $3, iditem = $4, nome_item = $5, keyword_item = $6, qtde = $7, via = $8, horario = $9, observacao = $10, status = $11, justificativa = $12, datainicio = $13, datatermino = $14, tipoitem = $15, aprazamento = $16, tag_componente = $17 WHERE id = $18";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditem, nome_item, keyword_item, qtde, via, horario, observacao, status, justificativa, datainicio, datatermino, tipoitem, aprazamento, tag_componente, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
