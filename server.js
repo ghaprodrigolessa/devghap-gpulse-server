@@ -791,11 +791,11 @@ app.post("/update_atendimento_prescricao_componente/:id", (req, res) => {
   });
 });
 
-// deletar componente de prescrição.
+// deletar componentes de prescrição pelo iditem (massivo).
 app.get("/delete_atendimento_prescricao_componente/:id", (req, res) => {
   const id = parseInt(req.params.id);
   console.log(id);
-  var sql = "DELETE FROM atendimento_prescricao_componente WHERE id = $1";
+  var sql = "DELETE FROM atendimento_prescricao_componente WHERE iditem = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
