@@ -770,28 +770,28 @@ app.get("/atendimento_prescricao_componente/:id", (req, res) => {
   });
 });
 
-// inserir registro de prescrição.
+// inserir componente de prescrição.
 app.post("/insert_atendimento_prescricao_componente", (req, res) => {
-  const { idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde } = req.body;
-  var sql = "INSERT INTO atendimento_prescricao_componente (idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde) VALUES ($1, $2, $3, $4, $5, $6)";
-  pool.query(sql, [idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde], (error, results) => {
+  const { idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, iditem } = req.body;
+  var sql = "INSERT INTO atendimento_prescricao_componente (idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, iditem) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, iditem], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
 });
 
-// atualizar item de prescrição.
+// atualizar componente de prescrição.
 app.post("/update_atendimento_prescricao_componente/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde } = req.body;
-  var sql = "UPDATE atendimento_prescricao_componente SET idpct = $1, idatendimento = $2, idprescricao = $3, iditemprescricao = $4, componente = $5, qtde = $6 WHERE id = $7";
-  pool.query(sql, [idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, id], (error, results) => {
+  const { idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, iditem } = req.body;
+  var sql = "UPDATE atendimento_prescricao_componente SET idpct = $1, idatendimento = $2, idprescricao = $3, iditemprescricao = $4, componente = $5, qtde = $6, iditem = $7 WHERE id = $8";
+  pool.query(sql, [idpct, idatendimento, idprescricao, iditemprescricao, componente, qtde, iditem, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
 });
 
-// deletar item de prescrição.
+// deletar componente de prescrição.
 app.get("/delete_atendimento_prescricao_componente/:id", (req, res) => {
   const id = parseInt(req.params.id);
   console.log(id);
