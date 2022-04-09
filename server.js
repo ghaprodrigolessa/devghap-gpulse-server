@@ -801,3 +801,14 @@ app.get("/delete_atendimento_prescricao_componente/:id", (req, res) => {
     res.send(results);
   });
 });
+
+// deletar componentes de prescrição pelo id (pontual).
+app.get("/delete_atendimento_prescricao_componente_pontual/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_prescricao_componente WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
