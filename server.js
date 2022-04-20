@@ -445,6 +445,58 @@ app.get("/delete_escala/:id", (req, res) => {
   });
 });
 
+// LINHA DE CUIDADO.
+// retornar opções de linhas de cuidado.
+app.get("/opcoes_linhasdecuidado", (req, res) => {
+  var sql = "SELECT * FROM planoterapeutico_linhas_de_cuidado";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// retornar registros de linhas de cuidado para o atendimento selecionado.
+app.get("/linhasdecuidado/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_linhadecuidado WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir linha de cuidado.
+app.post("/insert_linhadecuidado", (req, res) => {
+  const { idpct, idatendimento, id_linhadecuidado, var_linhadecuidado, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "INSERT INTO atendimento_linhadecuidado (idpct, idatendimento, id_linhadecuidado, var_linhadecuidado, datainicio, datatermino, idprofissional) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  pool.query(sql, [idpct, idatendimento, id_linhadecuidado, var_linhadecuidado, datainicio, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar linha de cuidado.
+app.post("/update_linhadecuidado/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, id_linhadecuidado, var_linhadecuidado, datainicio, datatermino, idprofissional } = req.body;
+  var sql = "UPDATE atendimento_linhadecuidado SET idpct = $1, idatendimento = $2, id_linhadecuidado = $3, var_linhadecuidado = $4, datainicio = $5, datatermino = $6, idprofissional = $7 WHERE id = $8";
+  pool.query(sql, [idpct, idatendimento, id_linhadecuidado, var_linhadecuidado, datainicio, datatermino, idprofissional], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar linha de cuidado.
+app.get("/delete_linhadecuidado/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_linhadecuidado WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
 // PLANO TERAPÊUTICO.
 // retornar registros de planos terapêuticos para o atendimento selecionado.
 app.get("/list_planosterapeuticos/:id", (req, res) => {
