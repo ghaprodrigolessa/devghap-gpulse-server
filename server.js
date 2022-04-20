@@ -445,6 +445,7 @@ app.get("/delete_escala/:id", (req, res) => {
   });
 });
 
+
 // LINHA DE CUIDADO.
 // retornar opções de linhas de cuidado.
 app.get("/opcoes_linhasdecuidado", (req, res) => {
