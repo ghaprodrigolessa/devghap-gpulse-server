@@ -697,7 +697,7 @@ app.get("/delete_propostaterapeutica/:id", (req, res) => {
   });
 });
 
-// PRESCRIÇÃO.
+// PRESCRIÇÃO (PULSOS).
 // 1. registros de prescrição.
 // listar registros de prescrição para um atendimento.
 app.get("/atendimento_prescricao/:id", (req, res) => {
@@ -860,6 +860,101 @@ app.get("/delete_atendimento_prescricao_componente_pontual/:id", (req, res) => {
   const id = parseInt(req.params.id);
   console.log(id);
   var sql = "DELETE FROM atendimento_prescricao_componente WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// EVOLUÇÃO.
+// lista de registros de evolução.
+app.get("/list_evolucoes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_evolucao WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir evolução.
+app.post("/insert_evolucao", (req, res) => {
+  const { idpct, idatendimento, data, evolucao, idprofissional, status } = req.body;
+  var sql = "INSERT INTO atendimento_evolucao (idpct, idatendimento, data, evolucao, idprofissional, status) VALUES ($1, $2, $3, $4, $5, $6)";
+  pool.query(sql, [idpct, idatendimento, data, evolucao, idprofissional, status], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar evolução.
+app.post("/update_evolucao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, data, evolucao, idprofissional, status } = req.body;
+  var sql = "UPDATE atendimento_evolucao SET idpct = $1, idatendimento = $2, data = $3, evolucao = $4, idprofissional = $5, status = $6 WHERE id = $7";
+  pool.query(sql, [idpct, idatendimento, data, evolucao, idprofissional, status, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar evolução.
+app.get("/delete_evolucao/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_evolucao WHERE id = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// DOCUMENTOS.
+// listar opções de documentos.
+app.get("/list_opcoes_documentos", (req, res) => {
+  var sql = "SELECT * FROM documentos_opcoes";
+  pool.query(sql, (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// lista de registros de documentos.
+app.get("/list_documentos/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  var sql = "SELECT * FROM atendimento_documento WHERE idatendimento = $1";
+  pool.query(sql, [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+// inserir documento.
+app.post("/insert_documento", (req, res) => {
+  const { idpct, idatendimento, data, tipo, texto, idprofissional, status } = req.body;
+  var sql = "INSERT INTO atendimento_documento (idpct, idatendimento, data, tipo, texto, idprofissional, status) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+  pool.query(sql, [idpct, idatendimento, data, tipo, texto, idprofissional, status], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// atualizar documento.
+app.post("/update_documento/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const { idpct, idatendimento, data, tipo, texto, idprofissional, status } = req.body;
+  var sql = "UPDATE atendimento_documento SET idpct = $1, idatendimento = $2, data = $3, tipo = $4, texto = $5, idprofissional = $6, status = $7 WHERE id = $8";
+  pool.query(sql, [idpct, idatendimento, data, tipo, texto, idprofissional, status, id], (error, results) => {
+    if (error) throw new Error(error);
+    res.send(results);
+  });
+});
+
+// deletar documento.
+app.get("/delete_documento/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  var sql = "DELETE FROM atendimento_documento WHERE id = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
