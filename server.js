@@ -870,7 +870,7 @@ app.get("/delete_atendimento_prescricao_componente_pontual/:id", (req, res) => {
 // lista de registros de evolução.
 app.get("/list_evolucoes/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  var sql = "SELECT * FROM atendimento_evolucao WHERE idatendimento = $1";
+  var sql = "SELECT * FROM atendimento_evolucao WHERE idpct = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
@@ -922,7 +922,7 @@ app.get("/list_opcoes_documentos", (req, res) => {
 // lista de registros de documentos.
 app.get("/list_documentos/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  var sql = "SELECT * FROM atendimento_documento WHERE idatendimento = $1";
+  var sql = "SELECT * FROM atendimento_documento WHERE idpct = $1";
   pool.query(sql, [id], (error, results) => {
     if (error) throw error;
     res.send(results);
