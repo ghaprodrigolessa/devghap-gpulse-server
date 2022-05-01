@@ -57,9 +57,9 @@ app.get("/list_todos_atendimentos", (req, res) => {
 
 // inserir atendimento.
 app.post("/insert_atendimento", (req, res) => {
-  const { idpct, idatendimento } = req.body;
-  var sql = "INSERT INTO atendimento (idpct, idatendimento) VALUES ($1, $2)";
-  pool.query(sql, [idpct, idatendimento], (error, results) => {
+  const { idpct, idatendimento, datainicio, datatermino, ap, medprev, exprev, hda } = req.body;
+  var sql = "INSERT INTO atendimento (idpct, idatendimento, datainicio, datatermino, ap, medprev, exprev, hda) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, ap, medprev, exprev, hda], (error, results) => {
     if (error) throw new Error(req.body.idpct + 'MERDA: ' + error);
     res.send(results);
   });
@@ -68,9 +68,9 @@ app.post("/insert_atendimento", (req, res) => {
 // atualizar atendimento.
 app.post("/update_atendimento/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { idpct, idatendimento } = req.body;
-  var sql = "UPDATE atendimento SET idpct = $1, idatendimento = $2 WHERE id = $3";
-  pool.query(sql, [idpct, idatendimento, id], (error, results) => {
+  const { idpct, idatendimento, datainicio, datatermino, ap, medprev, exprev, hda } = req.body;
+  var sql = "UPDATE atendimento SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, ap = $5, medprev = $6, exprev = $7, hda = $8 WHERE id = $9";
+  pool.query(sql, [idpct, idatendimento, datainicio, datatermino, ap, medprev, exprev, hda, id], (error, results) => {
     if (error) throw new Error(error);
     res.send(results);
   });
