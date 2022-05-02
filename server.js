@@ -66,7 +66,7 @@ app.post("/insert_atendimento", (req, res) => {
 });
 
 // atualizar atendimento.
-app.post("/update_atendimento/:id", (req, res) => {
+app.post("/update_atendimentos/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const { idpct, idatendimento, datainicio, datatermino, ap, medprev, exprev, hda } = req.body;
   var sql = "UPDATE atendimento SET idpct = $1, idatendimento = $2, datainicio = $3, datatermino = $4, ap = $5, medprev = $6, exprev = $7, hda = $8 WHERE id = $9";
